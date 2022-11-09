@@ -4,10 +4,12 @@ import (
 	"context"
 	"database/sql"
 	"delivery-api-project/domain"
-	"errors"
 )
 
-const getDeliveryByOrder = "SELECT * FROM delivery WHERE id_order = ?"
+const (
+	getReceiverLocationyByOrder  = "SELECT * FROM delivery WHERE id_order = ? and type = receiver"
+	getRemittentLocationyByOrder = "SELECT * FROM delivery WHERE id_order = ? and type = remitent"
+)
 
 type repository struct {
 	db *sql.DB
@@ -23,21 +25,32 @@ func NewRepository(db *sql.DB) Repository {
 	}
 }
 
+//Returns the recevier location and the remitter location of an order.
 func (r *repository) GetReceiverAndRemittentLocation(ctx context.Context, id int) (receiver domain.Location, remittent domain.Location, err error) {
 
-	d := domain.Delivery{}
-
-	result, err := r.db.Query(getDeliveryByOrder, id)
+	receiverResult, err := r.db.Query(getReceiverLocationyByOrder, id)
 	if err != nil {
-		return domain.Delivery{}, err
+		return domain.Location{}, domain.Location{}, err
 	}
 
-	for result.Next() {
-		err := result.Scan(&d.Id, &d.IdOrder, &d.IdOriginLocation, &d.IdDestinyLocation, &d.PickUpDate, &d.DeliveryDate)
+	remittentResult, err := r.db.Query(getRemittentLocationyByOrder, id)
+	if err != nil {
+		return domain.Location{}, domain.Location{}, err
+	}
+
+	for receiverResult.Next() {
+		err := receiverResult.Scan(&receiver.Id, &receiver.IdOrder, &receiver.Type, &receiver.Province, &receiver.City, &receiver.Commune, &receiver.FullAddress, &receiver.Lat, &receiver.Lng)
 		if err != nil {
-			return domain.Delivery{}, errors.New(err.Error())
+			return domain.Location{}, domain.Location{}, err
 		}
 	}
 
-	return d, nil
+	for remittentResult.Next() {
+		err := remittentResult.Scan(&remittent.Id, &remittent.IdOrder, &remittent.Type, &remittent.Province, &remittent.City, &remittent.Commune, &remittent.FullAddress, &remittent.Lat, &remittent.Lng)
+		if err != nil {
+			return domain.Location{}, domain.Location{}, err
+		}
+	}
+
+	return receiver, remittent, nil
 }

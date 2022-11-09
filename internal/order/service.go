@@ -5,6 +5,7 @@ import (
 	request "delivery-api-project/controllers/web"
 	response "delivery-api-project/controllers/web"
 	"delivery-api-project/internal/delivery"
+	"delivery-api-project/internal/location"
 	"delivery-api-project/internal/packages"
 )
 
@@ -25,19 +26,19 @@ type service struct {
 	repository   Repository
 	packagesRepo packages.Repository
 	delvieryRepo delivery.Repository
+	locationRepo location.Repository
 }
 
-func NewService(repository Repository, packagesRepo packages.Repository, delvieryRepo delivery.Repository) Service {
+func NewService(repository Repository, packagesRepo packages.Repository, delvieryRepo delivery.Repository, locationRepo location.Repository) Service {
 	return &service{
 		repository:   repository,
 		packagesRepo: packagesRepo,
 		delvieryRepo: delvieryRepo,
+		locationRepo: location.Repository,
 	}
 }
 
 func (s *service) Get(ctx context.Context, id int) (response.Order, error) {
-
-	responseOrder := response.Order{}
 
 	order, err := s.repository.Get(ctx, id)
 	if err != nil {
@@ -54,7 +55,15 @@ func (s *service) Get(ctx context.Context, id int) (response.Order, error) {
 		return response.Order{}, err
 	}
 
-	receiverLocation, remittentLocation, err :=
+	receiverLocation, remittentLocation, err := s.locationRepo.GetReceiverAndRemittentLocation(ctx, id)
+	if err != nil {
+		return response.Order{}, err
+	}
 
-	return packagesRepository, nil
+	responseOrder, err := buildResponseOrder(order, packages, delivery, receiverLocation, remittentLocation)
+	if err != nil {
+		return response.Order{}, err
+	}
+
+	return responseOrder, nil
 }
