@@ -15,7 +15,7 @@ const (
 )
 
 type Order struct {
-	Id           int    `json:"id"`
+	Id           *int   `json:"id"`
 	IdDelivery   int    `json:"id_delivery"`
 	ReceiverID   int    `json:"id_receiver"`
 	RemitterID   int    `json:"id_remitter"`

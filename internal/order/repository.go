@@ -20,7 +20,7 @@ type repository struct {
 
 type Repository interface {
 	Get(ctx context.Context, id int) (domain.Order, error)
-	Create(ctx context.Context, order domain.Order) error
+	Create(ctx context.Context, order domain.Order) (*int, error)
 	UpdateStatus(ctx context.Context, idOrder int, newStatus string) error
 }
 
@@ -49,18 +49,25 @@ func (r *repository) Get(ctx context.Context, id int) (domain.Order, error) {
 	return order, nil
 }
 
-func (r *repository) Create(ctx context.Context, order domain.Order) error {
+func (r *repository) Create(ctx context.Context, order domain.Order) (*int, error) {
 	stmt, err := r.db.Prepare(create)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	_, err = stmt.Exec(nil, order.IdDelivery, order.ReceiverID, order.RemitterID, order.Status, order.CreationDate)
+	res, err := stmt.Exec(nil, order.IdDelivery, order.ReceiverID, order.RemitterID, order.Status, order.CreationDate)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	id, err := res.LastInsertId()
+	if err != nil {
+		return nil, err
+	}
+
+	finalId := int(id)
+
+	return &finalId, nil
 }
 
 func (r *repository) UpdateStatus(ctx context.Context, idOrder int, newStatus string) error {

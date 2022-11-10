@@ -1,8 +1,7 @@
 package domain
 
 type Location struct {
-	Id          int     `json:"id"`
-	IdOrder     int     `json:"id_order"`
+	Id          *int    `json:"id"`
 	Type        string  `json:"type"`
 	Province    string  `json:"province"`
 	City        string  `json:"city"`
