@@ -1,23 +1,24 @@
 package domain
 
 const (
-	status1 = "creado"
+	Status1 = "creado"
 
-	status2 = "	recolectado"
+	Status2 = "	recolectado"
 
-	status3 = "en_estacion"
+	Status3 = "en_estacion"
 
-	status4 = "en_ruta"
+	Status4 = "en_ruta"
 
-	status5 = "entregado"
+	Status5 = "entregado"
 
-	status6 = "cancelado"
+	Status6 = "cancelado"
 )
 
 type Order struct {
-	Id           int       `json:"id"`
-	Packages     []Package `json:"package"`
-	Delivery     Delivery  `json:"delivery"`
-	Status       string    `json:"status"`
-	CreationDate string    `json:"creation_date"`
+	Id           *int   `json:"id"`
+	IdDelivery   int    `json:"id_delivery"`
+	ReceiverID   int    `json:"id_receiver"`
+	RemitterID   int    `json:"id_remitter"`
+	Status       string `json:"status"`
+	CreationDate string `json:"creation_date"`
 }
