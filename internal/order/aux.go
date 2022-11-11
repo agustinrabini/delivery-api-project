@@ -2,6 +2,7 @@ package order
 
 import (
 	"context"
+	"delivery-api-project/controllers/web/request"
 	response "delivery-api-project/controllers/web/response"
 	"delivery-api-project/domain"
 	"fmt"
@@ -49,21 +50,23 @@ func buildDelivery(idRemittentLoc, idReceiverLoc int) (domain.Delivery, error) {
 	return delivery, nil
 }
 
-func buildPackages(ctx context.Context, s service, pkgs []domain.Package, idOrder *int) error {
+func buildPackages(ctx context.Context, s service, rrpkgs []request.Package, idOrder *int) error {
 
-	for _, pk := range pkgs {
+	for _, rrpk := range rrpkgs {
 
-		if pk.Weight < 5 {
-			pk.Size = "S"
-		} else if pk.Weight > 5 && pk.Weight < 15 {
-			pk.Size = "M"
-		} else if pk.Weight > 15 && pk.Weight < 25 {
-			pk.Size = "L"
+		pkg := domain.Package{Weight: rrpk.Weight}
+
+		if rrpk.Weight < 5 {
+			pkg.Size = "S"
+		} else if rrpk.Weight > 5 && rrpk.Weight < 15 {
+			pkg.Size = "M"
+		} else if rrpk.Weight > 15 && rrpk.Weight < 25 {
+			pkg.Size = "L"
 		}
 
-		pk.IdOrder = *idOrder
+		pkg.IdOrder = *idOrder
 
-		err := s.packagesRepo.Create(ctx, pk)
+		err := s.packagesRepo.Create(ctx, pkg)
 		if err != nil {
 			return err
 		}

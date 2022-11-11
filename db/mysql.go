@@ -11,7 +11,7 @@ import (
 func InitSQL() *sql.DB {
 
 	conString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", config.ConfMap.MysqlUser, config.ConfMap.MysqlPassword, config.ConfMap.MysqlHost, config.ConfMap.MysqlPort, config.ConfMap.DataBase)
-	fmt.Println(conString)
+
 	db, err := sql.Open("mysql", conString)
 	if err != nil {
 		panic(err.Error())

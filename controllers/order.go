@@ -71,6 +71,7 @@ func (cn *OrderController) Create() gin.HandlerFunc {
 
 		err := c.ShouldBindJSON(&request)
 		if err != nil {
+			fmt.Println(err.Error())
 			c.JSON(422, err.Error())
 			return
 		}
