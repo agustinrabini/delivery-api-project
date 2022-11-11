@@ -46,5 +46,6 @@ func (r *router) buildSellerRoutes() {
 
 	r.rg.POST("/order/create", handler.Create())
 	r.rg.GET("/order/update/:id/:status", handler.UpdateStatus())
-	r.rg.GET("/sellers/get/:id", handler.Get())
+	r.rg.GET("/order/get/:id", handler.Get())
+	r.rg.GET("/order/ping", Ping)
 }

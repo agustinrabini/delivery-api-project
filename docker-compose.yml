@@ -1,20 +1,20 @@
 version: '2.3'
 
 services:
-  delivery:
+  delivery-api-project:
     # platform: linux/amd64 #Mac OS
     container_name: delivery-api-project
     build:
       context: .
-      dockerfile: environment/delivery-api-project.dockerfile
+      dockerfile: delivery-api-project.dockerfile
     ports:
       - 8080:8080
     links:
-      - db-delivery
+      - db-delivery-api-project
     depends_on:
-      db-delivery:
+      db-delivery-api-project:
         condition: service_healthy
-  db-delivery:
+  db-delivery-api-project:
     image: mysql:8.0.26
     # platform: linux/amd64 #Mac OS
     command: --default-authentication-plugin=mysql_native_password --lower_case_table_names=1
@@ -28,27 +28,27 @@ services:
       DB_HOST: '0.0.0.0'
       MYSQL_DB_HOST: '0.0.0.0'
     volumes_from:
-      - dbdata-delivery
+      - dbdata-delivery-api-project
     ports:
       - 3310:3306
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       timeout: 20s
       retries: 10
-  dbdata-delivery:
+  dbdata-delivery-api-project:
     container_name: delivery_api_data
     image: mysql:8.0.26
     # platform: linux/amd64 #Mac OS
     volumes:
       - /var/lib/mysql
     command: "true"
-  flyway-delivery:
+  flyway-delivery-api-project:
     image: flyway/flyway:7.15
     # platform: linux/amd64 #Mac OS
-    command: -url=jdbc:mysql://db-delivery -schemas=delivery -user=delivery -password=delivery1234 -connectRetries=60 -sqlMigrationPrefix='delivery-' -sqlMigrationSeparator='_' -locations='filesystem:/flyway/sql' migrate
+    command: -url=jdbc:mysql://db-delivery-api-project -schemas=delivery_project -user=root -password=delivery1234 -connectRetries=60 -sqlMigrationPrefix='delivery-' -sqlMigrationSeparator='_' -locations='filesystem:/flyway/sql' migrate
     volumes:
-      - ./../database:/flyway/sql
+      - ./db:/flyway/sql
     links:
-      - db-delivery
+      - db-delivery-api-project
     depends_on:
-      - db-delivery
+      - db-delivery-api-project
