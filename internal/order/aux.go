@@ -9,7 +9,7 @@ import (
 func buildResponseOrder(order domain.Order, packages []domain.Package, delivery domain.Delivery, receiverLocation, remittentLocation domain.Location) (response.Order, error) {
 
 	respondeDelivery := response.Delivery{
-		Id:              delivery.Id,
+		Id:              *delivery.Id,
 		OriginLocation:  remittentLocation,
 		DestinyLocation: receiverLocation,
 		PickUpDate:      delivery.PickUpDate,
@@ -17,7 +17,7 @@ func buildResponseOrder(order domain.Order, packages []domain.Package, delivery 
 	}
 
 	responseOrder := response.Order{
-		Id:           order.Id,
+		Id:           *order.Id,
 		ReceiverID:   order.ReceiverID,
 		RemitterID:   order.RemitterID,
 		Packages:     packages,
@@ -29,7 +29,7 @@ func buildResponseOrder(order domain.Order, packages []domain.Package, delivery 
 	return responseOrder, nil
 }
 
-//Returns a domain.Delivery{} with the pick up and delivery date and hour.
+//Returns a domain.Delivery{} with the pick up and delivery date and hour setted.
 func buildDelivery(idRemittentLoc, idReceiverLoc int) (domain.Delivery, error) {
 
 	date := time.Now()

@@ -15,7 +15,7 @@ type Configuration struct {
 
 var ConfMap Configuration
 
-func Load() {
+func LoadConfigs() {
 
 	fmt.Println("Loading configuration...")
 
@@ -24,5 +24,4 @@ func Load() {
 	ConfMap.MysqlHost = os.Getenv("MYSQL_HOST")
 	ConfMap.MysqlPort = os.Getenv("MYSQL_PORT")
 	ConfMap.MysqlUser = os.Getenv("MYSQL_DATABASE")
-
 }

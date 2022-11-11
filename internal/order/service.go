@@ -8,20 +8,14 @@ import (
 	"delivery-api-project/internal/delivery"
 	"delivery-api-project/internal/location"
 	"delivery-api-project/internal/packages"
+	"fmt"
 	"time"
 )
 
-/*
-	Creación de orden
-	Consulta de orden
-	Actualización de estatus de la orden
-	Cancelación de la orden con y sin reembolso
-*/
 type Service interface {
 	Get(ctx context.Context, id int) (response.Order, error)
 	Create(ctx context.Context, order request.Order) (*int, error)
 	UpdateStatus(ctx context.Context, idOrder *int, status string) error
-	CancelOrder(ctx context.Context, idOrder *int) (bool, error)
 }
 
 type service struct {
@@ -100,11 +94,37 @@ func (s *service) Create(ctx context.Context, rrOrder request.Order) (*int, erro
 		Status:       "creado",
 		CreationDate: time.Now().Format("2006-1-2 15:4:5"),
 	})
+	if err != nil {
+		return nil, err
+	}
 
 	return orderId, nil
 }
 
 func (s *service) UpdateStatus(ctx context.Context, idOrder *int, status string) error {
+
+	if status == "cancelado" {
+
+		order, err := s.repository.Get(ctx, *idOrder)
+		if err != nil {
+			return err
+		}
+
+		dateFormat := "2006-1-2 15:4:5"
+
+		actualDate := time.Now()
+
+		orderDateFormated, err := time.Parse(dateFormat, order.CreationDate)
+		if err != nil {
+			return err
+		}
+
+		diff := actualDate.Sub(orderDateFormated)
+
+		if diff.Minutes() >= 2 && orderDateFormated.Day() != actualDate.Day() {
+			return fmt.Errorf("no se puede cancelar la orden")
+		}
+	}
 
 	err := s.repository.UpdateStatus(ctx, *idOrder, status)
 	if err != nil {
@@ -112,33 +132,4 @@ func (s *service) UpdateStatus(ctx context.Context, idOrder *int, status string)
 	}
 
 	return nil
-}
-
-func (s *service) CancelOrder(ctx context.Context, idOrder *int) (bool, error) {
-
-	order, err := s.repository.Get(ctx, *idOrder)
-	if err != nil {
-		return false, nil
-	}
-
-	dateFormat := "2006-1-2 15:4:5"
-
-	actualDate := time.Now()
-
-	orderDateFormated, err := time.Parse(dateFormat, order.CreationDate)
-	if err != nil {
-		return false, err
-	}
-
-	diff := actualDate.Sub(orderDateFormated)
-	if diff.Minutes() < 2 {
-		return false, nil
-	}
-
-	err = s.repository.UpdateStatus(ctx, *idOrder, "cancelado")
-	if err != nil {
-		return false, err
-	}
-
-	return true, nil
 }
