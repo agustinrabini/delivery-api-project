@@ -12,6 +12,15 @@ import (
 	"time"
 )
 
+const (
+	status1 = "creado"
+	status2 = "recolectado"
+	status3 = "en_estacion"
+	status4 = "en_ruta"
+	status5 = "entregado"
+	status6 = "cancelado"
+)
+
 type Service interface {
 	Get(ctx context.Context, id int) (response.Order, error)
 	Create(ctx context.Context, order request.Order) (*int, error)
@@ -21,15 +30,15 @@ type Service interface {
 type service struct {
 	repository   Repository
 	packagesRepo packages.Repository
-	delvieryRepo delivery.Repository
+	deliveryRepo delivery.Repository
 	locationRepo location.Repository
 }
 
-func NewService(repository Repository, packagesRepo packages.Repository, delvieryRepo delivery.Repository, locationRepo location.Repository) Service {
+func NewService(repository Repository, packagesRepo packages.Repository, deliveryRepo delivery.Repository, locationRepo location.Repository) Service {
 	return &service{
 		repository:   repository,
 		packagesRepo: packagesRepo,
-		delvieryRepo: delvieryRepo,
+		deliveryRepo: deliveryRepo,
 		locationRepo: locationRepo,
 	}
 }
@@ -46,7 +55,7 @@ func (s *service) Get(ctx context.Context, id int) (response.Order, error) {
 		return response.Order{}, err
 	}
 
-	delivery, err := s.delvieryRepo.GetDeliveryByOrder(ctx, *order.Id)
+	delivery, err := s.deliveryRepo.GetDeliveryByOrder(ctx, *order.Id)
 	if err != nil {
 		return response.Order{}, err
 	}
@@ -81,7 +90,7 @@ func (s *service) Create(ctx context.Context, rrOrder request.Order) (*int, erro
 		return nil, err
 	}
 
-	deliveryID, err := s.delvieryRepo.Create(ctx, delivery)
+	deliveryID, err := s.deliveryRepo.Create(ctx, delivery)
 	if err != nil {
 		return nil, err
 	}
@@ -98,35 +107,26 @@ func (s *service) Create(ctx context.Context, rrOrder request.Order) (*int, erro
 		return nil, err
 	}
 
+	err = buildPackages(ctx, *s, rrOrder.Packages, orderId)
+	if err != nil {
+		return nil, err
+	}
+
 	return orderId, nil
 }
 
 func (s *service) UpdateStatus(ctx context.Context, idOrder *int, status string) error {
 
-	if status == "cancelado" {
-
-		order, err := s.repository.Get(ctx, *idOrder)
-		if err != nil {
-			return err
-		}
-
-		dateFormat := "2006-1-2 15:4:5"
-
-		actualDate := time.Now()
-
-		orderDateFormated, err := time.Parse(dateFormat, order.CreationDate)
-		if err != nil {
-			return err
-		}
-
-		diff := actualDate.Sub(orderDateFormated)
-
-		if diff.Minutes() >= 2 && orderDateFormated.Day() != actualDate.Day() {
-			return fmt.Errorf("no se puede cancelar la orden")
-		}
+	if status != status1 || status != status2 || status != status3 || status != status4 || status != status5 || status != status6 {
+		return fmt.Errorf("status invalido")
 	}
 
-	err := s.repository.UpdateStatus(ctx, *idOrder, status)
+	err := cancelOption(ctx, *s, idOrder, status)
+	if err != nil {
+		return err
+	}
+
+	err = s.repository.UpdateStatus(ctx, *idOrder, status)
 	if err != nil {
 		return err
 	}

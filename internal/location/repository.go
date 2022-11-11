@@ -16,15 +16,6 @@ type repository struct {
 	db *sql.DB
 }
 
-/* Id          *int    `json:"id"`
-IdOrder     *int    `json:"id_order"`
-Type        string  `json:"type"`
-Province    string  `json:"province"`
-City        string  `json:"city"`
-Commune     string  `json:"commune"`
-FullAddress string  `json:"full_address"`
-Lat         float64 `json:"lat"`
-Lng         float64 `json:"lng"` */
 type Repository interface {
 	Create(ctx context.Context, loc domain.Location, typeLoc string) (*int, error)
 	GetReceiverAndRemittentLocation(ctx context.Context, id int) (receiver domain.Location, remittent domain.Location, err error)
