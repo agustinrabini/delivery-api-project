@@ -15,6 +15,6 @@ type Delivery struct {
 }
 
 type Package struct {
-	Weight        float32 `json:"weight" validate:"required,number,min=1,max=25"`
+	Weight        float32 `json:"weight" validate:"required,min=1,max=25"`
 	QuantityItems int     `json:"quantity_items" validate:"required,min=1"`
 }

@@ -80,6 +80,12 @@ func (cn *OrderController) Create() gin.HandlerFunc {
 			return
 		}
 
+		err = validateRequest(request)
+		if err != nil {
+			c.JSON(422, err.Error())
+			return
+		}
+
 		id, err := cn.s.Create(c, request)
 		if err != nil {
 			c.JSON(500, err.Error())

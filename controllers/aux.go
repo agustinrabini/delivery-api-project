@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"delivery-api-project/controllers/web/request"
 	"delivery-api-project/controllers/web/response"
 	"fmt"
 )
@@ -23,4 +24,27 @@ func validateOrder(order response.Order) error {
 	}
 
 	return nil
+}
+
+func validateRequest(order request.Order) error {
+
+	for _, pkg := range order.Packages {
+
+		if pkg.QuantityItems < 1 {
+			return fmt.Errorf("the quantity of items cannot be less than one")
+		}
+
+		if pkg.Weight > 25 {
+			return fmt.Errorf("the service for packages that weights more than 25kg is not avaible, order not taked")
+		}
+		if pkg.Weight < 0 {
+			return fmt.Errorf("please enter the weigth of the package")
+		}
+	}
+
+	if order.Delivery.DestinyLocation.Province == "" || order.Delivery.OriginLocation.Type == "" || order.Delivery.OriginLocation.Commune == "" || order.Delivery.DestinyLocation.FullAddress == "" || order.Delivery.DestinyLocation.Lng == 0 || order.Delivery.DestinyLocation.Lat == 0 {
+		return fmt.Errorf("missing values on the request, please check the body")
+	}
+	return nil
+
 }
