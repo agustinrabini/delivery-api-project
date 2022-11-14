@@ -31,14 +31,7 @@
 			"name": "POST",
 			"request": {
 				"method": "POST",
-				"header": [
-					{
-						"key": "HeaderAuthorization",
-						"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjNmNjcyNDYxOTk4YjJiMzMyYWQ4MTY0ZTFiM2JlN2VkYTY4NDZiMzciLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQXlsZW4gUm9kcmlndWV6IiwicGljdHVyZSI6Imh0dHBzOi8vZmlyZWJhc2VzdG9yYWdlLmdvb2dsZWFwaXMuY29tL3YwL2Ivam9waXQtMzM0NTIzLmFwcHNwb3QuY29tL28vaW1hZ2VzJTJGaW1hZ2UlMjUzQTE5ODQ3P2FsdD1tZWRpYSZ0b2tlbj0wYmYzN2E2NC0yYjMxLTRjMmQtYWU2YS1iNTAxNmJmM2RjMmMiLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vam9waXQtMzM0NTIzIiwiYXVkIjoiam9waXQtMzM0NTIzIiwiYXV0aF90aW1lIjoxNjY2MzAxMDc0LCJ1c2VyX2lkIjoiZ0VRd0ZDMTZBSmdVNEUwRlZvRzcyZ05kR0RGMyIsInN1YiI6ImdFUXdGQzE2QUpnVTRFMEZWb0c3MmdOZEdERjMiLCJpYXQiOjE2NjYzMDEwNzQsImV4cCI6MTY2NjMwNDY3NCwiZW1haWwiOiJwcnVlYmEzQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJwcnVlYmEzQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.jaldzb9vr4E5yhD0kzp0oAGuUJvzulvlY_uvhKutvCq1oKtdDntdu-K2vd1ZZL3uFuFMEUJwfZw3ggEH6siRpC862I36HLICWGKrYeaBHvPaGRJHIxOuW1NQ-Muz2mQiI59OHaFGicTrbiHoTKzBcv7pyayTcbuK2vncWcMf1uy2k32DpwyN4egXytGuGeNjH0P189Y0wDfi1u4ci25ZQ_iD9bWSbSkwkdY-XvcqN1wrs129P-jQL3Od0wd6Rap3rpQPXyecUl9NNbeWsaSHYf0aQuA_zJ39sEvMP3Vmslz8ROsh6d45qMZhoyhgRRuZbaX1b0kHt9cfIhS85c2Epw",
-						"type": "default",
-						"disabled": true
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n   \"id_receiver\":1,\n   \"id_remitter\":20,\n   \"packages\":[\n      {\n         \"weight\":10,\n         \"quantity_items\":2\n      },\n      {\n         \"weight\":20,\n         \"quantity_items\":1\n      }\n   ],\n   \"delivery\":{\n      \"origin_location\":{\n         \"type\":\"remittent\",\n         \"province\":\"caba\",\n         \"city\":\"caba\",\n         \"commune\":\"caba\",\n         \"full_address\":\"caba\",\n         \"lat\":-34.6596342,\n         \"lng\":-58.5050333\n      },\n      \"destiny_location\":{\n         \"type\":\"receiver\",\n         \"province\":\"bsas\",\n         \"city\":\"bsas\",\n         \"commune\":\"bsas\",\n         \"full_address\":\"bsas\",\n         \"lat\":-34.6088606,\n         \"lng\":-58.5162579\n      }\n   }\n}",
@@ -72,17 +65,10 @@
 			},
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "HeaderAuthorization",
-						"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjNmNjcyNDYxOTk4YjJiMzMyYWQ4MTY0ZTFiM2JlN2VkYTY4NDZiMzciLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQXlsZW4gUm9kcmlndWV6IiwicGljdHVyZSI6Imh0dHBzOi8vZmlyZWJhc2VzdG9yYWdlLmdvb2dsZWFwaXMuY29tL3YwL2Ivam9waXQtMzM0NTIzLmFwcHNwb3QuY29tL28vaW1hZ2VzJTJGaW1hZ2UlMjUzQTE5ODQ3P2FsdD1tZWRpYSZ0b2tlbj0wYmYzN2E2NC0yYjMxLTRjMmQtYWU2YS1iNTAxNmJmM2RjMmMiLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vam9waXQtMzM0NTIzIiwiYXVkIjoiam9waXQtMzM0NTIzIiwiYXV0aF90aW1lIjoxNjY2MzAxMDc0LCJ1c2VyX2lkIjoiZ0VRd0ZDMTZBSmdVNEUwRlZvRzcyZ05kR0RGMyIsInN1YiI6ImdFUXdGQzE2QUpnVTRFMEZWb0c3MmdOZEdERjMiLCJpYXQiOjE2NjYzMDEwNzQsImV4cCI6MTY2NjMwNDY3NCwiZW1haWwiOiJwcnVlYmEzQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJwcnVlYmEzQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.jaldzb9vr4E5yhD0kzp0oAGuUJvzulvlY_uvhKutvCq1oKtdDntdu-K2vd1ZZL3uFuFMEUJwfZw3ggEH6siRpC862I36HLICWGKrYeaBHvPaGRJHIxOuW1NQ-Muz2mQiI59OHaFGicTrbiHoTKzBcv7pyayTcbuK2vncWcMf1uy2k32DpwyN4egXytGuGeNjH0P189Y0wDfi1u4ci25ZQ_iD9bWSbSkwkdY-XvcqN1wrs129P-jQL3Od0wd6Rap3rpQPXyecUl9NNbeWsaSHYf0aQuA_zJ39sEvMP3Vmslz8ROsh6d45qMZhoyhgRRuZbaX1b0kHt9cfIhS85c2Epw",
-						"type": "default",
-						"disabled": true
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id_receiver\": 1,\n    \"id_remitter\": 20,\n    \"packages\": [\n        {\n        \"weight\": 10,\n        \"quantity_items\": 2\n        },{\n        \"weight\": 20,\n        \"quantity_items\": 1\n        }\n    ],\n    \"delivery\": {\n       \"origin_location\": {\n           \"type\": \"remittent\",\n           \"province\":\"caba\",\n           \"city\":\"caba\",\n           \"commune\":\"caba\",\n            \"full_address\":\"caba\",\n            \"lat\":-34.6596342,\n            \"lng\":-58.5050333\n       },\n       \"destiny_location\": {\n           \"type\": \"receiver\",\n           \"province\":\"bsas\",\n           \"city\":\"bsas\",\n           \"commune\":\"bsas\",\n            \"full_address\":\"bsas\",\n            \"lat\":-34.6088606,\n            \"lng\":-58.5162579\n       }\n    }\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -90,7 +76,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/order/get/2",
+					"raw": "http://localhost:8080/api/v1/order/get/4",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -101,27 +87,20 @@
 						"v1",
 						"order",
 						"get",
-						"2"
+						"4"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "GET Copy",
+			"name": "Update Status",
 			"request": {
 				"method": "PUT",
-				"header": [
-					{
-						"key": "HeaderAuthorization",
-						"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjNmNjcyNDYxOTk4YjJiMzMyYWQ4MTY0ZTFiM2JlN2VkYTY4NDZiMzciLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQXlsZW4gUm9kcmlndWV6IiwicGljdHVyZSI6Imh0dHBzOi8vZmlyZWJhc2VzdG9yYWdlLmdvb2dsZWFwaXMuY29tL3YwL2Ivam9waXQtMzM0NTIzLmFwcHNwb3QuY29tL28vaW1hZ2VzJTJGaW1hZ2UlMjUzQTE5ODQ3P2FsdD1tZWRpYSZ0b2tlbj0wYmYzN2E2NC0yYjMxLTRjMmQtYWU2YS1iNTAxNmJmM2RjMmMiLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vam9waXQtMzM0NTIzIiwiYXVkIjoiam9waXQtMzM0NTIzIiwiYXV0aF90aW1lIjoxNjY2MzAxMDc0LCJ1c2VyX2lkIjoiZ0VRd0ZDMTZBSmdVNEUwRlZvRzcyZ05kR0RGMyIsInN1YiI6ImdFUXdGQzE2QUpnVTRFMEZWb0c3MmdOZEdERjMiLCJpYXQiOjE2NjYzMDEwNzQsImV4cCI6MTY2NjMwNDY3NCwiZW1haWwiOiJwcnVlYmEzQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJwcnVlYmEzQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.jaldzb9vr4E5yhD0kzp0oAGuUJvzulvlY_uvhKutvCq1oKtdDntdu-K2vd1ZZL3uFuFMEUJwfZw3ggEH6siRpC862I36HLICWGKrYeaBHvPaGRJHIxOuW1NQ-Muz2mQiI59OHaFGicTrbiHoTKzBcv7pyayTcbuK2vncWcMf1uy2k32DpwyN4egXytGuGeNjH0P189Y0wDfi1u4ci25ZQ_iD9bWSbSkwkdY-XvcqN1wrs129P-jQL3Od0wd6Rap3rpQPXyecUl9NNbeWsaSHYf0aQuA_zJ39sEvMP3Vmslz8ROsh6d45qMZhoyhgRRuZbaX1b0kHt9cfIhS85c2Epw",
-						"type": "default",
-						"disabled": true
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id_receiver\": 1,\n    \"id_remitter\": 20,\n    \"packages\": [\n        {\n        \"weight\": 10,\n        \"quantity_items\": 2\n        },{\n        \"weight\": 20,\n        \"quantity_items\": 1\n        }\n    ],\n    \"delivery\": {\n       \"origin_location\": {\n           \"type\": \"remittent\",\n           \"province\":\"caba\",\n           \"city\":\"caba\",\n           \"commune\":\"caba\",\n            \"full_address\":\"caba\",\n            \"lat\":-34.6596342,\n            \"lng\":-58.5050333\n       },\n       \"destiny_location\": {\n           \"type\": \"receiver\",\n           \"province\":\"bsas\",\n           \"city\":\"bsas\",\n           \"commune\":\"bsas\",\n            \"full_address\":\"bsas\",\n            \"lat\":-34.6088606,\n            \"lng\":-58.5162579\n       }\n    }\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -129,7 +108,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/order/update/1/recolectado",
+					"raw": "http://localhost:8080/api/v1/order/update/2/cancelado",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -140,8 +119,8 @@
 						"v1",
 						"order",
 						"update",
-						"1",
-						"recolectado"
+						"2",
+						"cancelado"
 					]
 				}
 			},
