@@ -7,27 +7,19 @@ import (
 )
 
 const (
-	getReceiverLocationyByOrder  = "SELECT * FROM location WHERE id_order = ? and type = receiver"
-	getRemittentLocationyByOrder = "SELECT * FROM location WHERE id_order = ? and type = remitent"
-	createLocation               = "INSERT INTO location (id, id_order, type, province, city, commune, full_address, lat, lng) VALUES (?,?,?,?,?,?,?,?,?)"
+	//getReceiverLocationyByOrder  = "SELECT * FROM location WHERE id = ? and types = 'receiver'"
+	//getRemittentLocationyByOrder = "SELECT * FROM location WHERE id = ? and types = 'remittent'"
+	getLoc         = "SELECT * FROM location WHERE id = ? "
+	createLocation = "INSERT INTO location (id, types, province, city, commune, full_address, lat, lng) VALUES (?,?,?,?,?,?,?,?)"
 )
 
 type repository struct {
 	db *sql.DB
 }
 
-/* Id          *int    `json:"id"`
-IdOrder     *int    `json:"id_order"`
-Type        string  `json:"type"`
-Province    string  `json:"province"`
-City        string  `json:"city"`
-Commune     string  `json:"commune"`
-FullAddress string  `json:"full_address"`
-Lat         float64 `json:"lat"`
-Lng         float64 `json:"lng"` */
 type Repository interface {
 	Create(ctx context.Context, loc domain.Location, typeLoc string) (*int, error)
-	GetReceiverAndRemittentLocation(ctx context.Context, id int) (receiver domain.Location, remittent domain.Location, err error)
+	GetReceiverAndRemittentLocation(ctx context.Context, IdOriginLocation, IdDestinyLocation int) (receiver domain.Location, remittent domain.Location, err error)
 }
 
 func NewRepository(db *sql.DB) Repository {
@@ -59,14 +51,14 @@ func (r *repository) Create(ctx context.Context, loc domain.Location, typeLoc st
 }
 
 //Returns the recevier location and the remitter location of an order.
-func (r *repository) GetReceiverAndRemittentLocation(ctx context.Context, id int) (receiver domain.Location, remittent domain.Location, err error) {
+func (r *repository) GetReceiverAndRemittentLocation(ctx context.Context, IdOriginLocation, IdDestinyLocation int) (receiver domain.Location, remittent domain.Location, err error) {
 
-	receiverResult, err := r.db.Query(getReceiverLocationyByOrder, id)
+	receiverResult, err := r.db.Query(getLoc, IdDestinyLocation)
 	if err != nil {
 		return domain.Location{}, domain.Location{}, err
 	}
 
-	remittentResult, err := r.db.Query(getRemittentLocationyByOrder, id)
+	remittentResult, err := r.db.Query(getLoc, IdOriginLocation)
 	if err != nil {
 		return domain.Location{}, domain.Location{}, err
 	}

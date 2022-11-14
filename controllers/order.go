@@ -54,6 +54,11 @@ func (cn *OrderController) Get() gin.HandlerFunc {
 			return
 		}
 
+		if (order.Status == "") && err == nil {
+			msg := fmt.Sprintf("any order found with with id: %d", id)
+			c.JSON(200, msg)
+		}
+
 		err = validateOrder(order)
 		if err != nil {
 			c.JSON(500, err.Error())
@@ -69,7 +74,7 @@ func (cn *OrderController) Create() gin.HandlerFunc {
 
 		request := request.Order{}
 
-		err := c.ShouldBindJSON(&request)
+		err := c.BindJSON(&request)
 		if err != nil {
 			c.JSON(422, err.Error())
 			return
@@ -77,7 +82,7 @@ func (cn *OrderController) Create() gin.HandlerFunc {
 
 		id, err := cn.s.Create(c, request)
 		if err != nil {
-			c.JSON(422, err.Error())
+			c.JSON(500, err.Error())
 			return
 		}
 
@@ -101,11 +106,10 @@ func (cn *OrderController) UpdateStatus() gin.HandlerFunc {
 
 		err = cn.s.UpdateStatus(c, &id, status)
 		if err != nil {
-			c.JSON(402, err.Error())
+			c.JSON(400, err.Error())
 			return
 		}
 
-		c.JSON(201, "")
-
+		c.Status(200)
 	}
 }

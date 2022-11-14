@@ -9,7 +9,7 @@ import (
 
 const (
 	createDelivery     = "INSERT INTO delivery (id, id_origin_location, id_destiny_location, pick_up_date, delivery_date) VALUES (?,?,?,?,?)"
-	getDeliveryByOrder = "SELECT * FROM delivery WHERE id_order = ?"
+	getDeliveryByOrder = "SELECT * FROM delivery WHERE id = ?"
 )
 
 type repository struct {
