@@ -77,9 +77,6 @@ func buildPackages(ctx context.Context, s service, rrpkgs []request.Package, idO
 
 func cancelOption(ctx context.Context, s service, idOrder *int, status string) error {
 
-	dateFormat := "2006-1-2 15:4:5"
-	actualDate := time.Now()
-
 	if status == "cancelado" {
 
 		order, err := s.repository.Get(ctx, *idOrder)
@@ -91,14 +88,14 @@ func cancelOption(ctx context.Context, s service, idOrder *int, status string) e
 			return fmt.Errorf("no se puede cancelar la orden")
 		}
 
-		orderDateFormated, err := time.Parse(dateFormat, order.CreationDate)
+		orderDate, err := time.Parse("2006-1-2 15:4:5", order.CreationDate)
 		if err != nil {
 			return err
 		}
 
-		diff := actualDate.Sub(orderDateFormated)
+		diff := time.Now().Sub(orderDate)
 
-		if diff.Minutes() >= 2 && orderDateFormated.Day() != actualDate.Day() {
+		if diff >= 2 {
 			return fmt.Errorf("no se puede cancelar la orden")
 		}
 	}
