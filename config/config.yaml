@@ -1,0 +1,5 @@
+delivery_api_mysql_username : "root"
+delivery_api_mysql_password : "delivery1234"
+delivery_api_mysql_host : "db-delivery-api-project"
+delivery_api_mysql_port : 3306
+delivery_api_mysql_database : "delivery"

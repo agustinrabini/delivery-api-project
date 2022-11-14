@@ -10,8 +10,8 @@ import (
 
 func main() {
 
-	db := db.InitSQL()
 	config.LoadConfigs()
+	db := db.InitSQL()
 
 	r := gin.Default()
 

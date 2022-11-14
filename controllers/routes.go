@@ -45,7 +45,7 @@ func (r *router) buildSellerRoutes() {
 	handler := NewOrderController(service)
 
 	r.rg.POST("/order/create", handler.Create())
-	r.rg.GET("/order/update/:id/:status", handler.UpdateStatus())
+	r.rg.PUT("/order/update/:id/:status", handler.UpdateStatus())
 	r.rg.GET("/order/get/:id", handler.Get())
 	r.rg.GET("/order/ping", Ping)
 }

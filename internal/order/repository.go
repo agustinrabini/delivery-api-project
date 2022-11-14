@@ -4,13 +4,12 @@ import (
 	"context"
 	"database/sql"
 	"delivery-api-project/domain"
-	"errors"
 	"fmt"
 )
 
 const (
 	getOrder     = "SELECT * FROM orders WHERE id = ?"
-	create       = "INSERT INTO orders (id, id_delivery, id_receiver, id_remeitter, status, creation_date) VALUES (?,?,?,?,?,?)"
+	create       = "INSERT INTO orders (id, id_delivery, id_receiver, id_remitter, status, creation_date) VALUES (?,?,?,?,?,?)"
 	updateStauts = "UPDATE orders SET status = ? WHERE id = ? "
 )
 
@@ -42,7 +41,11 @@ func (r *repository) Get(ctx context.Context, id int) (domain.Order, error) {
 	for result.Next() {
 		err := result.Scan(&order.Id, &order.IdDelivery, &order.ReceiverID, &order.RemitterID, &order.Status, &order.CreationDate)
 		if err != nil {
-			return domain.Order{}, errors.New(err.Error())
+			return domain.Order{}, err
+		}
+
+		if order.Id == nil && err == nil {
+			return domain.Order{}, nil
 		}
 	}
 

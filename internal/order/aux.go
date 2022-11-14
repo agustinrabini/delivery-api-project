@@ -54,7 +54,7 @@ func buildPackages(ctx context.Context, s service, rrpkgs []request.Package, idO
 
 	for _, rrpk := range rrpkgs {
 
-		pkg := domain.Package{Weight: rrpk.Weight}
+		pkg := domain.Package{Weight: rrpk.Weight, QuantityItems: rrpk.QuantityItems}
 
 		if rrpk.Weight < 5 {
 			pkg.Size = "S"

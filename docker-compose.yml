@@ -25,8 +25,8 @@ services:
       MYSQL_PASSWORD: delivery1234
       MYSQL_ROOT_PASSWORD: delivery1234
       MYSQL_ROOT_HOST: '%'
-      DB_HOST: '0.0.0.0'
-      MYSQL_DB_HOST: '0.0.0.0'
+      DB_HOST: '127.0.0.1'
+      MYSQL_DB_HOST: '127.0.0.1'
     volumes_from:
       - dbdata-delivery-api-project
     ports:
@@ -45,7 +45,7 @@ services:
   flyway-delivery-api-project:
     image: flyway/flyway:7.15
     # platform: linux/amd64 #Mac OS
-    command: -url=jdbc:mysql://db-delivery-api-project -schemas=delivery_project -user=root -password=delivery1234 -connectRetries=60 -sqlMigrationPrefix='delivery-' -sqlMigrationSeparator='_' -locations='filesystem:/flyway/sql' migrate
+    command: -url=jdbc:mysql://db-delivery-api-project -schemas=delivery -user=root -password=delivery1234 -connectRetries=60 -sqlMigrationPrefix='delivery-' -sqlMigrationSeparator='_' -locations='filesystem:/flyway/sql' migrate
     volumes:
       - ./db:/flyway/sql
     links:
