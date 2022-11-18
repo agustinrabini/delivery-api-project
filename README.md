@@ -16,7 +16,7 @@ You can find the postman collection on the root project. However this are the av
 - `http://localhost:8080/api/v1/order/update/:id/:status` `[UPDATE]`
 - `http://localhost:8080/api/v1/order/get/:id` `[GET]`
 
-# Request examples:
+# Request example:
   
 - `http://localhost:8080/api/v1/order/create`: 
 
@@ -55,7 +55,7 @@ You can find the postman collection on the root project. However this are the av
     }
   }
 
-# Response examples:
+# Response example:
 
 - `http://localhost:8080/api/v1/order/get/4`:
 
