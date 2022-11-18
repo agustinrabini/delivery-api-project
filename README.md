@@ -16,5 +16,44 @@ You can find the postman collection on the root project. However this are the av
 - `http://localhost:8080/api/v1/order/update/:id/:status`
 - `http://localhost:8080/api/v1/order/get/:id`
 
-# Domain models:
+# Request and responses examples:
   
+- `http://localhost:8080/api/v1/order/ping`: `pong`
+
+- `http://localhost:8080/api/v1/order/create`:
+  Request:
+
+  ```{
+   "id_receiver":1,
+   "id_remitter":20,
+   "packages":[
+      {
+         "weight":10,
+         "quantity_items":2
+      },
+      {
+         "weight":20,
+         "quantity_items":1
+      }
+   ],
+   "delivery":{
+      "origin_location":{
+         "type":"remittent",
+         "province":"caba",
+         "city":"caba",
+         "commune":"caba",
+         "full_address":"caba",
+         "lat":-34.6596342,
+         "lng":-58.5050333
+      },
+      "destiny_location":{
+         "type":"receiver",
+         "province":"bsas",
+         "city":"bsas",
+         "commune":"bsas",
+         "full_address":"bsas",
+         "lat":-34.6088606,
+         "lng":-58.5162579
+      }
+   }
+}```
