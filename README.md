@@ -11,16 +11,17 @@ On the root of the project run `docker-compose up` and thats it, the api will ru
 
 You can find the postman collection on the root project. However this are the avaible endpoints:
 
-- `http://localhost:8080/api/v1/order/ping`
-- `http://localhost:8080/api/v1/order/create`
-- `http://localhost:8080/api/v1/order/update/:id/:status`
-- `http://localhost:8080/api/v1/order/get/:id`
+- `http://localhost:8080/api/v1/order/ping` `[GET]`
+- `http://localhost:8080/api/v1/order/create` `[POST]`
+- `http://localhost:8080/api/v1/order/update/:id/:status` `[UPDATE]`
+- `http://localhost:8080/api/v1/order/get/:id` `[GET]`
 
 # Request and responses examples:
   
 - `http://localhost:8080/api/v1/order/ping`: `pong`
 
 - `http://localhost:8080/api/v1/order/create`:
+
   Request:
 
   ```{
@@ -57,3 +58,5 @@ You can find the postman collection on the root project. However this are the av
       }
    }
 }```
+  
+  Response: `200, "order created with id: 1"`
