@@ -16,13 +16,9 @@ You can find the postman collection on the root project. However this are the av
 - `http://localhost:8080/api/v1/order/update/:id/:status` `[UPDATE]`
 - `http://localhost:8080/api/v1/order/get/:id` `[GET]`
 
-# Request and responses examples:
+# Request examples:
   
-- `http://localhost:8080/api/v1/order/ping`: `pong`
-
-- `http://localhost:8080/api/v1/order/create`:
-
-  Request:
+- `http://localhost:8080/api/v1/order/create`: 
 
   ```{
    "id_receiver":1,
@@ -56,7 +52,44 @@ You can find the postman collection on the root project. However this are the av
          "lat":-34.6088606,
          "lng":-58.5162579
       }
-   }
+    }
+  }
+
+# Response examples:
+
+- `http://localhost:8080/api/v1/order/get/4`:
+
+```
+{
+    "id": 4,
+    "id_receiver": 1,
+    "id_remitter": 20,
+    "package": [],
+    "delivery": {
+        "id": 4,
+        "origin_location": {
+            "id": 8,
+            "type": "remitter",
+            "province": "caba",
+            "city": "caba",
+            "commune": "caba",
+            "full_address": "caba",
+            "lat": -34.659634,
+            "lng": -58.50503
+        },
+        "destiny_address": {
+            "id": 7,
+            "type": "receiver",
+            "province": "bsas",
+            "city": "bsas",
+            "commune": "bsas",
+            "full_address": "bsas",
+            "lat": -34.60886,
+            "lng": -58.51626
+        },
+        "pick_up_date": "2022-11-15 15:13:17",
+        "delivery_date": "2022-11-16 15:13:17"
+    },
+    "status": "creado",
+    "creation_date": "2022-11-14 15:13:17"
 }```
-  
-  Response: `200, "order created with id: 1"`
