@@ -92,4 +92,4 @@ You can find the postman collection on the root project. However this are the av
     },
     "status": "creado",
     "creation_date": "2022-11-14 15:13:17"
-}```
+}
