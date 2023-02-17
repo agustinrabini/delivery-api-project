@@ -1,0 +1,168 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a project of an api.",
+        "title": "Delivery Project \u003cDomain\u003e",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Matias Nuñez",
+            "url": "http://www.swagger.io/support",
+            "email": "agustinrabini99@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/order/get/:id": {
+            "get": {
+                "description": "Get order of an user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get order",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/request.Order"
+                        }
+                    }
+                }
+            }
+        },
+        "/ping": {
+            "get": {
+                "description": "test if the router works correctly",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ping"
+                ],
+                "summary": "Ping",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Shop ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "domain.Location": {
+            "type": "object",
+            "required": [
+                "city",
+                "commune",
+                "full_address",
+                "lat",
+                "lng",
+                "province",
+                "type"
+            ],
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "commune": {
+                    "type": "string"
+                },
+                "full_address": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "lat": {
+                    "type": "number"
+                },
+                "lng": {
+                    "type": "number"
+                },
+                "province": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.Delivery": {
+            "type": "object",
+            "required": [
+                "destiny_location",
+                "origin_location"
+            ],
+            "properties": {
+                "destiny_location": {
+                    "$ref": "#/definitions/domain.Location"
+                },
+                "origin_location": {
+                    "$ref": "#/definitions/domain.Location"
+                }
+            }
+        },
+        "request.Order": {
+            "type": "object",
+            "required": [
+                "delivery",
+                "id_receiver",
+                "id_remitter",
+                "packages"
+            ],
+            "properties": {
+                "delivery": {
+                    "$ref": "#/definitions/request.Delivery"
+                },
+                "id_receiver": {
+                    "type": "integer"
+                },
+                "id_remitter": {
+                    "type": "integer"
+                },
+                "packages": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/request.Package"
+                    }
+                }
+            }
+        },
+        "request.Package": {
+            "type": "object",
+            "required": [
+                "quantity_items",
+                "weight"
+            ],
+            "properties": {
+                "quantity_items": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "weight": {
+                    "type": "number",
+                    "maximum": 25,
+                    "minimum": 1
+                }
+            }
+        }
+    }
+}

@@ -85,7 +85,7 @@ func cancelOption(ctx context.Context, s service, idOrder *int, status string) e
 		}
 
 		if order.Status == status4 || order.Status == status5 {
-			return fmt.Errorf("no se puede cancelar la orden")
+			return fmt.Errorf("no se puede cancelar la orden, dado que ya esta en camino o ha sido entregada")
 		}
 
 		orderDate, err := time.Parse("2006-1-2 15:4:5", order.CreationDate)

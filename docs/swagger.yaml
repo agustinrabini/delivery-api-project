@@ -1,0 +1,115 @@
+definitions:
+  domain.Location:
+    properties:
+      city:
+        type: string
+      commune:
+        type: string
+      full_address:
+        type: string
+      id:
+        type: integer
+      lat:
+        type: number
+      lng:
+        type: number
+      province:
+        type: string
+      type:
+        type: string
+    required:
+    - city
+    - commune
+    - full_address
+    - lat
+    - lng
+    - province
+    - type
+    type: object
+  request.Delivery:
+    properties:
+      destiny_location:
+        $ref: '#/definitions/domain.Location'
+      origin_location:
+        $ref: '#/definitions/domain.Location'
+    required:
+    - destiny_location
+    - origin_location
+    type: object
+  request.Order:
+    properties:
+      delivery:
+        $ref: '#/definitions/request.Delivery'
+      id_receiver:
+        type: integer
+      id_remitter:
+        type: integer
+      packages:
+        items:
+          $ref: '#/definitions/request.Package'
+        type: array
+    required:
+    - delivery
+    - id_receiver
+    - id_remitter
+    - packages
+    type: object
+  request.Package:
+    properties:
+      quantity_items:
+        minimum: 1
+        type: integer
+      weight:
+        maximum: 25
+        minimum: 1
+        type: number
+    required:
+    - quantity_items
+    - weight
+    type: object
+info:
+  contact:
+    email: agustinrabini99@gmail.com
+    name: Matias Nuñez
+    url: http://www.swagger.io/support
+  description: This is a project of an api.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Delivery Project <Domain>
+  version: "1.0"
+paths:
+  /order/get/:id:
+    get:
+      consumes:
+      - application/json
+      description: Get order of an user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/request.Order'
+      summary: Get order
+      tags:
+      - Order
+  /ping:
+    get:
+      description: test if the router works correctly
+      parameters:
+      - description: Shop ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Ping
+      tags:
+      - ping
+swagger: "2.0"

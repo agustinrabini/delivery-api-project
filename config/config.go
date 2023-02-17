@@ -30,7 +30,7 @@ func LoadConfigs() Configuration {
 	//sets default config values
 	if ConfMap.MysqlUser == "" {
 
-		yfile, err := ioutil.ReadFile("config.yaml")
+		yfile, err := ioutil.ReadFile("./config/config.yaml")
 		if err != nil {
 			log.Fatal(err)
 		}

@@ -2,20 +2,12 @@ package controllers
 
 import (
 	"delivery-api-project/controllers/web/request"
+	_ "delivery-api-project/docs"
 	"delivery-api-project/internal/order"
 	"fmt"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-)
-
-const (
-	genericErrorMessageGet       = "Error obtaining object"
-	genericErrorMessageCreate    = "Error creating object"
-	genericErrorMessageUpdate    = "Error updating object"
-	genericErrorMessageDelete    = "Error deleting object"
-	genericErrorMessageInvalidId = "Error invalid ID"
-	genericErrorMessageNotFound  = "Resource not found"
 )
 
 type OrderController struct {
@@ -27,6 +19,7 @@ type OrderController struct {
 // @Description test if the router works correctly
 // @Tags ping
 // @Produce  json
+// @Param id path string true "Shop ID"
 // @Success 200
 // @Router /ping [get]
 func Ping(c *gin.Context) {
@@ -38,13 +31,20 @@ func NewOrderController(s order.Service) *OrderController {
 		s: s}
 }
 
+// @Summary Get order
+// @Description Get order of an user
+// @Tags Order
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} request.Order
+// @Router /order/get/:id [get]
 func (cn *OrderController) Get() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 		i := c.Param("id")
 		id, err := strconv.Atoi(i)
 		if err != nil {
-			c.JSON(402, err.Error())
+			c.JSON(422, err.Error())
 			return
 		}
 
